@@ -2,29 +2,19 @@ local UEHelpers = require("UEHelpers")
 local initialQuickMenu = nil
 
 local function log(message)
-    print("[CastOnShortcut] " .. message .. "\n")
+    print("[QuickCast] " .. message .. "\n")
 end
 
--- Track which keys were pressed
-local keyPressed = {
-    [1] = false,
-    [2] = false,
-    [3] = false,
-    [4] = false,
-    [5] = false,
-    [6] = false,
-    [7] = false,
-    [8] = false
-}
+local keyPressed = {}
+for i = 1, 8 do
+    keyPressed[i] = false
+end
 
--- Handle the key press event
 local function HandleKeyPress(slot)
     log("Key " .. slot .. " pressed - switching to slot")
     keyPressed[slot] = true
-    -- Let the native code handle the switching
 end
 
--- Handle the key release event - this is where we'll do the casting
 local function HandleKeyRelease(slot)
     -- Only proceed if this key was previously pressed
     if not keyPressed[slot] then
@@ -77,54 +67,13 @@ local function HandleKeyRelease(slot)
     end
 end
 
--- Register hooks for key press events
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick1Input_Pressed", function ()
-    HandleKeyPress(1)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick2Input_Pressed", function ()
-    HandleKeyPress(2)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick3Input_Pressed", function ()
-    HandleKeyPress(3)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick4Input_Pressed", function ()
-    HandleKeyPress(4)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick5Input_Pressed", function ()
-    HandleKeyPress(5)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick6Input_Pressed", function ()
-    HandleKeyPress(6)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick7Input_Pressed", function ()
-    HandleKeyPress(7)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick8Input_Pressed", function ()
-    HandleKeyPress(8)
-end)
+-- Register hooks for key press and release events
+for i = 1, 8 do
+    RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick" .. i .. "Input_Pressed", function()
+        HandleKeyPress(i)
+    end)
 
--- Register hooks for key release events
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick1Input_Released", function ()
-    HandleKeyRelease(1)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick2Input_Released", function ()
-    HandleKeyRelease(2)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick3Input_Released", function ()
-    HandleKeyRelease(3)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick4Input_Released", function ()
-    HandleKeyRelease(4)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick5Input_Released", function ()
-    HandleKeyRelease(5)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick6Input_Released", function ()
-    HandleKeyRelease(6)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick7Input_Released", function ()
-    HandleKeyRelease(7)
-end)
-RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick8Input_Released", function ()
-    HandleKeyRelease(8)
-end)
+    RegisterHook("/Script/Altar.VEnhancedAltarPlayerController:Quick" .. i .. "Input_Released", function()
+        HandleKeyRelease(i)
+    end)
+end
