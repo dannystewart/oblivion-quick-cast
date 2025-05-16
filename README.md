@@ -4,4 +4,6 @@ This is a mod of a mod for Oblivion Remastered by [Nistaux](https://www.nexusmod
 
 I was experiencing an issue that others don't seem to be having based on the mod posts where a race condition when pressing a number key caused the previous spell to on the first press instead of the intended one, as it hadn't finished switching quickly enough. This attempts to address that.
 
+Note that it may still not be perfect. I've had at least one miss during testing, but it was during hectic combat. It may be due to an animation or effect not completing fully before trying to cast the next spell. It still seems a bit more reliable to me than the original, but your mileage may vary.
+
 To install, you need [UE4SS](https://www.nexusmods.com/oblivionremastered/mods/32), and the mod should go here: `OblivionRemastered\Binaries\Win64\ue4ss\Mods\QuickCast\Scripts\main.lua`
